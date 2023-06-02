@@ -6,20 +6,24 @@ import './App.css';
 // import SplashScreen from './components/SplashScreen.js'
 import Chat from './components/Chat';
 import Home from './components/Home';
-import Registration from './components/Registration';
+// import Registration from './components/Registration';
 import {Route} from 'react-router-dom'
+import SplashScreen from './components/SplashScreen';
+import SigninPage from './components/Home';
+import Navbar from './components/Navbar';
+import SideDrawer from './components/miscelleneous/SideDrawer';
+import LoginPage from './components/LoginPage';
+import Signup from './components/Authentication/Signup';
+
 function App() {
   return (
-    <>
+    <div className="App">
+      {/* <Navbar/> */}
       
-      <Route exact path="/" component={Home} />
-      <Registration/>
-      <Route exact path="/chats" component={Chat} />
-      {/* <Header/> */}
-      {/* <SplashScreen/>
-   <LoginPage/> */}
-      {/* <Footer/> */}
-    </>
+      <LoginPage/>
+      {/* <SideDrawer></SideDrawer> */}
+      {/* <Chat></Chat> */}
+    </div>
   );
 }
 
