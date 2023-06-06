@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import axios from "axios"
-import {useHistory} from "react-router-dom"
+import {useNavigate} from "react-router-dom"
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 const Login = () => {
@@ -19,7 +19,7 @@ const Login = () => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false)
   const toast = useToast()
-  const history=useHistory()
+  const navigate=useNavigate()
 
   const submitHandler = async () => {
     setLoading(true);
@@ -41,7 +41,7 @@ const Login = () => {
             "Content-type": "application/json"
           }
         }
-        const { data } = await axios.post("api/user/login",
+        const { data } = await axios.post("http://localhost:5000/user/login",
           { email, password},
           config)
         toast({
@@ -53,11 +53,11 @@ const Login = () => {
         });
         localStorage.setItem('userInfo', JSON.stringify(data))
         setLoading(false);
-        history.push('/home')
+        navigate('/chat')
       } catch (error) {
         toast({
           title: "Error Occured!!",
-          description: error.responce.data.message,
+          // description: error.responce.data.message,
           status: "warning",
           duration: 5000,
           isClosable: true,

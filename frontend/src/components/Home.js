@@ -1,9 +1,15 @@
-import React from "react";
+import React,{useHistory,useEffect} from "react";
 import { Link } from "react-router-dom";
 import LoginIllustration from "../assets/login.png";
 import "./styles/signinStyle.css";
 
 const SigninPage = () => {
+  const history = useHistory();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+    if(user) history.push("/chats")
+  },[history])
   return (
     <>
       <div className="main-box">

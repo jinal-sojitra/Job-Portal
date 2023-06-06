@@ -1,58 +1,33 @@
 import React from "react";
-// import logo from './logo.png';
-import { Link } from "react-router-dom";
-
+import { Stack,Box, Flex, Space, Heading, Button } from "@chakra-ui/react";
+import CreateJob from "./CreateJob";
+import Chat from "./Chatpage";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg custom-navbar">
-        <div className="container-fluid">
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="/navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/">
-                  Job Portal
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/createProject">
-                  Post Job
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/projects">
-                  Projects
-                </Link>
-              </li>
-              {/* <li className="nav-item dropdown">
-          <Link className="nav-link dropdown-toggle" to="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </Link>
-          
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link disabled">Disabled</Link>
-        </li> */}
-            </ul>
-            <div className="d-flex">
-             
-            </div>
-          </div>
-        </div>
-      </nav>
-    </div>
+    <Flex justifyContent="space-between" bg="white" p={4} width="100%">
+      {/* alignItems="center" */}
+      <Heading size="md">Logo</Heading>
+      <Stack direction="row">
+        <Button>
+          <NavLink as={<Chat />} to="/chat" p={2}>
+            Chat
+          </NavLink>
+          {/* <NavLink as={RouterLink} to="/about" p={2}>
+            About
+          </NavLink> */}
+        </Button>
+        <Button>
+          <NavLink as={<CreateJob />} to="/createJob" p={2}>
+            Create Job
+          </NavLink>
+          {/* <NavLink as={RouterLink} to="/about" p={2}>
+            About
+          </NavLink> */}
+        </Button>
+      </Stack>
+    </Flex>
   );
 };
 

@@ -4,15 +4,18 @@ import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { VStack } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
 import axios from "axios";
+
 import { useState } from "react";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+// const dotenv = require("dotenv");
+// dotenv.config();
 
 const Signup = () => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [name, setName] = useState();
   const [email, setEmail] = useState();
@@ -51,8 +54,9 @@ const Signup = () => {
           "Content-type": "application/json",
         },
       };
+      // const api=process.env.BACKEND_API
       const { data } = await axios.post(
-        "/api/user",
+        "/user",
         {
           name,
           email,
@@ -71,7 +75,8 @@ const Signup = () => {
       });
       localStorage.setItem("userInfo", JSON.stringify(data));
       setPicLoading(false);
-      history.push("/home");
+      navigate("/chat");
+
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -101,16 +106,15 @@ const Signup = () => {
     if (pics.type === "image/jpeg" || pics.type === "image/png") {
       const data = new FormData();
       data.append("file", pics);
-      data.append("upload_preset", "chat-app");
-      data.append("cloud_name", "piyushproj");
-      fetch("https://api.cloudinary.com/v1_1/piyushproj/image/upload", {
+      data.append("upload_preset", "job-portal");
+      data.append("cloud_name", "dmdbdyviw");
+      fetch("https://api.cloudinary.com/v1_1/dmdbdyviw/image/upload", {
         method: "post",
         body: data,
       })
         .then((res) => res.json())
         .then((data) => {
           setPic(data.url.toString());
-          console.log(data.url.toString());
           setPicLoading(false);
         })
         .catch((err) => {
