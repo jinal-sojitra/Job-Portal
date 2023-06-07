@@ -3,6 +3,7 @@ import { Stack,Box, Flex, Space, Heading, Button } from "@chakra-ui/react";
 import CreateJob from "./CreateJob";
 import Chat from "./Chatpage";
 import { NavLink } from "react-router-dom";
+import JobPost from "./JobPost";
 
 const Navbar = () => {
   return (
@@ -21,6 +22,14 @@ const Navbar = () => {
         <Button>
           <NavLink as={<CreateJob />} to="/createJob" p={2}>
             Create Job
+          </NavLink>
+          {/* <NavLink as={RouterLink} to="/about" p={2}>
+            About
+          </NavLink> */}
+        </Button>
+        <Button>
+          <NavLink as={<JobPost />} to="/jobs" p={2}>
+            Jobs
           </NavLink>
           {/* <NavLink as={RouterLink} to="/about" p={2}>
             About

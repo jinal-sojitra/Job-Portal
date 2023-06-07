@@ -17,6 +17,7 @@ import LoginPage from "./components/LoginPage";
 import Signup from "./components/Authentication/Signup";
 import Chatpage from "./components/Chatpage";
 import CreateJob from "./components/CreateJob";
+import JobPost from "./components/JobPost";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="/" exact element={<LoginPage />} />
             <Route path="/chat" exact element={<Chatpage />} />
             <Route path="/createJob" exact element={<CreateJob />} />
+            <Route path="/jobs" exact element={<JobPost />} />
           </Routes>
         </Box>
       </Flex>

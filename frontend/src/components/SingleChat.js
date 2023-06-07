@@ -13,9 +13,11 @@ import Lottie from "lottie-react";
 //import animationData from "../animations/typing.json";
 
 import io from "socket.io-client";
+import ScrollableChat from "./ScrollableChat";
 import UpdateGroupChatModal from "./miscelleneous/UpdateGroupChatModal";
 import { ChatState } from "../Contexts/ChatProvider";
-const ENDPOINT = "http://localhost:5000"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
+
+const ENDPOINT = "http://localhost:5000"; 
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -54,6 +56,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         `/message/${selectedChat._id}`,
         config
       );
+      console.log(messages)
       setMessages(data);
       setLoading(false);
 
@@ -82,13 +85,15 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         };
         setNewMessage("");
         const { data } = await axios.post(
-          "http://localhost:5000/message",
+          "/message",
           {
             content: newMessage,
-            chatId: selectedChat,//selectedChat._id
+            chatId: selectedChat._id,//selectedChat._id
           }, 
           config
         );
+        console.log(data)
+        // setNewMessage("")
         socket.emit("new message", data);
         setMessages([...messages, data]);
       } catch (error) {
@@ -119,7 +124,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     fetchMessages();
 
     selectedChatCompare = selectedChat;
-    // eslint-disable-next-line
   }, [selectedChat]);
 
   useEffect(() => {
@@ -191,9 +195,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 <>
                   {selectedChat.chatName.toUpperCase()}
                   <UpdateGroupChatModal
-                    fetchMessages={fetchMessages}
                     fetchAgain={fetchAgain}
                     setFetchAgain={setFetchAgain}
+                    fetchMessages={fetchMessages}
                   />
                 </>
               ))}
@@ -207,7 +211,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             w="100%"
             h="100%"
             borderRadius="lg"
-            overflowY="hidden"
+            overflowY="auto"
           >
             {loading ? (
               <Spinner
@@ -219,7 +223,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               />
             ) : (
               <div className="messages">
-                {/* <ScrollableChat messages={messages} /> */}
+                <ScrollableChat messages={messages} />
               </div>
             )}
 
@@ -245,7 +249,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               <Input
                 variant="filled"
                 bg="white"
-                marginTop="450px"
+                position="absolute"
+                bottom="-380"
+                left="0"
+                width="100%"
                 placeholder="Enter a message.."
                 value={newMessage}
                 onChange={typingHandler}
