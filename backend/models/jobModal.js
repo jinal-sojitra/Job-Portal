@@ -15,7 +15,7 @@ const jobSchema = new mongoose.Schema(
       required: true,
     },
     skills: {
-      type: Array,
+      type: String,
       required: true,
     },
     experience: {
@@ -30,8 +30,8 @@ const jobSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    package: {
-      type: Number,
+    packageOffered: {
+      type: String,
       required: true,
     },
   },

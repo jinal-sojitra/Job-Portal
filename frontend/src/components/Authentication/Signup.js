@@ -4,7 +4,7 @@ import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { VStack } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
 import axios from "axios";
-
+import { Select } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -18,15 +18,21 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const [name, setName] = useState();
+  const [role, setRole] = useState();
   const [email, setEmail] = useState();
   const [confirmpassword, setConfirmpassword] = useState();
   const [password, setPassword] = useState();
   const [pic, setPic] = useState();
   const [picLoading, setPicLoading] = useState(false);
 
+const handleRoleChange = (e) => {
+  setRole(e.target.value); 
+};
   const submitHandler = async () => {
     setPicLoading(true);
-    if (!name || !email || !password || !confirmpassword) {
+    console.log(name, role, email, password);
+
+    if (!name || !role|| !email || !password || !confirmpassword) {
       toast({
         title: "Please Fill all the Feilds",
         status: "warning",
@@ -47,24 +53,26 @@ const Signup = () => {
       });
       return;
     }
-    console.log(name, email, password, pic);
+    console.log(name,role, email, password, pic);
     try {
       const config = {
         headers: {
           "Content-type": "application/json",
         },
       };
-      // const api=process.env.BACKEND_API
+      
       const { data } = await axios.post(
         "/user",
         {
           name,
+          role,
           email,
           password,
           pic,
         },
         config
       );
+      
       console.log(data);
       toast({
         title: "Registration Successful",
@@ -87,7 +95,8 @@ const Signup = () => {
         position: "bottom",
       });
       setPicLoading(false);
-    }
+      }
+      
   };
 
   const postDetails = (pics) => {
@@ -143,6 +152,16 @@ const Signup = () => {
           onChange={(e) => setName(e.target.value)}
         />
       </FormControl>
+
+      <FormControl id="role" isRequired>
+        <FormLabel>Role</FormLabel>
+        <Select value={role} onChange={handleRoleChange}>
+          <option value="select role">Select Role</option>
+          <option value="jobseeker">Job Seeker</option>
+          <option value="employer">Employer</option>
+        </Select>
+      </FormControl>
+
       <FormControl id="email" isRequired>
         <FormLabel>Email Address</FormLabel>
         <Input
@@ -190,6 +209,7 @@ const Signup = () => {
           onChange={(e) => postDetails(e.target.files[0])}
         />
       </FormControl>
+
       <Button
         colorScheme="blue"
         width="100%"

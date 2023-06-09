@@ -132,7 +132,7 @@ function SideDrawer() {
         // alignItems="center"
         bg="white"
         w="100%"
-        marginTop="20px"
+        marginTop="10px"
         marginBottom="10px"
         p="10px 5px 5px 5px"
         borderWidth="2px"

@@ -19,13 +19,11 @@ const allUsers = asyncHandler(async (req, res) => {
   res.send(users);
 });
 
-//@description     Register new user
-//@route           POST /api/user/
-//@access          Public
-const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, pic } = req.body;
 
-  if (!name || !email || !password) {
+const registerUser = asyncHandler(async (req, res) => {
+  const { name,role, email, password, pic } = req.body;
+
+  if (!name ||!role|| !email || !password) {
     res.status(400);
     throw new Error("Please Enter all the Feilds");
   }
@@ -39,6 +37,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const user = await User.create({
     name,
+    role,
     email,
     password,
     pic,
@@ -48,6 +47,7 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(201).json({
       _id: user._id,
       name: user.name,
+      role:user.role,
       email: user.email,
       isAdmin: user.isAdmin,
       pic: user.pic,
@@ -59,9 +59,6 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-//@description     Auth the user
-//@route           POST /api/users/login
-//@access          Public
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -71,6 +68,7 @@ const authUser = asyncHandler(async (req, res) => {
     res.json({
       _id: user._id,
       name: user.name,
+      role:user.role,
       email: user.email,
       isAdmin: user.isAdmin,
       pic: user.pic,

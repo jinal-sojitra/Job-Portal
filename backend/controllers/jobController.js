@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler");
 const Job = require("../models/jobModal");
 
 const createJob = asyncHandler(async (req, res) => {
-  const { title, description, company, skills, experience, employmentType, location, package } =req.body;
+  const { title, description, company, skills, experience, employmentType, location, packageOffered } =req.body;
 
   if (
     (!title ||
@@ -12,18 +12,11 @@ const createJob = asyncHandler(async (req, res) => {
     !experience||
     !employmentType||
     !location||
-    !package)
+    !packageOffered)
   ) {
     res.status(400);
     throw new Error("Please Enter all the Feilds");
   }
-
-//   const userExists = await User.findOne({ email });
-
-//   if (userExists) {
-//     res.status(400);
-//     throw new Error("User already exists");
-//   }
 
   const job = await Job.create({
     title,
@@ -33,7 +26,7 @@ const createJob = asyncHandler(async (req, res) => {
     experience,
     employmentType,
     location,
-    package,
+    packageOffered,
   });
 
   if (job) {
@@ -45,7 +38,7 @@ const createJob = asyncHandler(async (req, res) => {
       experience: job.experience,
       employmentType: job.employmentType,
       location: job.location,
-      package: job.package,
+      packageOffered: job.packageOffered,
     });
   } else {
     res.status(400);

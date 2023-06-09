@@ -1,8 +1,10 @@
-import React from 'react'
+import React from "react";
+import { Select } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/button";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
+// import { Box } from 'framer-motion';
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
-import { VStack } from "@chakra-ui/layout";
+import { VStack, Box, Container } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
 import axios from "axios";
 import { useState } from "react";
@@ -10,23 +12,41 @@ import { useNavigate } from "react-router-dom";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 const CreateJob = () => {
-  
-    
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
   const navigate = useNavigate();
 
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [confirmpassword, setConfirmpassword] = useState();
-  const [password, setPassword] = useState();
-  const [pic, setPic] = useState();
-  const [picLoading, setPicLoading] = useState(false);
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
+  const [company, setCompany] = useState();
+  const [skills, setSkills] = useState([]);
+  const [experience, setExperience] = useState();
+  const [employmentType, setEmploymentType] = useState();
+  const [location, setLocation] = useState();
+  const [packageOffered, setPackageOffered] = useState();
 
   const submitHandler = async () => {
-    setPicLoading(true);
-    if (!name || !email || !password || !confirmpassword) {
+    console.log(
+      `title "${title},
+      description ${description},
+      company ${company},
+      skills ${skills},
+      experience ${experience},
+      employmentType ${employmentType},
+      location ${location},
+      packageOffered ${packageOffered}`
+    );
+    if (
+      !title ||
+      !description ||
+      !company ||
+      !skills ||
+      !experience ||
+      !employmentType ||
+      !location ||
+      !packageOffered
+    ) {
       toast({
         title: "Please Fill all the Feilds",
         status: "warning",
@@ -34,20 +54,9 @@ const CreateJob = () => {
         isClosable: true,
         position: "bottom",
       });
-      setPicLoading(false);
       return;
     }
-    if (password !== confirmpassword) {
-      toast({
-        title: "Passwords Do Not Match",
-        status: "warning",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom",
-      });
-      return;
-    }
-    console.log(name, email, password, pic);
+    
     try {
       const config = {
         headers: {
@@ -55,26 +64,29 @@ const CreateJob = () => {
         },
       };
       const { data } = await axios.post(
-        "/api/user",
+        "http://localhost:5000/job",
         {
-          name,
-          email,
-          password,
-          pic,
+          title,
+          description,
+          company,
+          skills,
+          experience,
+          employmentType,
+          location,
+          packageOffered,
         },
         config
       );
       console.log(data);
       toast({
-        title: "Registration Successful",
+        title: "Job Posted Successfully",
         status: "success",
         duration: 5000,
         isClosable: true,
         position: "bottom",
       });
-      localStorage.setItem("userInfo", JSON.stringify(data));
-      setPicLoading(false);
-      navigate("/home");
+      // localStorage.setItem("jobInfo", JSON.stringify(data));
+      // navigate("/home");
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -84,123 +96,109 @@ const CreateJob = () => {
         isClosable: true,
         position: "bottom",
       });
-      setPicLoading(false);
     }
-  };
-
-  const postDetails = (pics) => {
-    setPicLoading(true);
-    if (pics === undefined) {
-      toast({
-        title: "Please Select an Image!",
-        status: "warning",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom",
-      });
-      return;
-    }
-    console.log(pics);
-    if (pics.type === "image/jpeg" || pics.type === "image/png") {
-      const data = new FormData();
-      data.append("file", pics);
-      data.append("upload_preset", "chat-app");
-      data.append("cloud_name", "piyushproj");
-      fetch("https://api.cloudinary.com/v1_1/piyushproj/image/upload", {
-        method: "post",
-        body: data,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setPic(data.url.toString());
-          console.log(data.url.toString());
-          setPicLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          setPicLoading(false);
-        });
-    } else {
-      toast({
-        title: "Please Select an Image!",
-        status: "warning",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom",
-      });
-      setPicLoading(false);
-      return;
-    }
+   
   };
 
   return (
-    <VStack spacing="5px">
-      <FormControl id="first-name" isRequired>
-        <FormLabel>Name</FormLabel>
-        <Input
-          placeholder="Enter Your Name"
-          onChange={(e) => setName(e.target.value)}
-        />
-      </FormControl>
-      <FormControl id="email" isRequired>
-        <FormLabel>Email Address</FormLabel>
-        <Input
-          type="email"
-          placeholder="Enter Your Email Address"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </FormControl>
-      <FormControl id="password" isRequired>
-        <FormLabel>Password</FormLabel>
-        <InputGroup size="md">
-          <Input
-            type={show ? "text" : "password"}
-            placeholder="Enter Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={handleClick}>
-              {show ? <ViewOffIcon onClick={handleClick} /> : <ViewIcon />}
-            </Button>
-          </InputRightElement>
-        </InputGroup>
-      </FormControl>
-      <FormControl id="password" isRequired>
-        <FormLabel>Confirm Password</FormLabel>
-        <InputGroup size="md">
-          <Input
-            type={show ? "text" : "password"}
-            placeholder="Confirm password"
-            onChange={(e) => setConfirmpassword(e.target.value)}
-          />
-          <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={handleClick}>
-              {show ? <ViewOffIcon onClick={handleClick} /> : <ViewIcon />}
-            </Button>
-          </InputRightElement>
-        </InputGroup>
-      </FormControl>
-      <FormControl id="pic">
-        <FormLabel>Upload your Picture</FormLabel>
-        <Input
-          type="file"
-          p={1.5}
-          accept="image/*"
-          onChange={(e) => postDetails(e.target.files[0])}
-        />
-      </FormControl>
-      <Button
-        colorScheme="blue"
-        width="100%"
-        style={{ marginTop: 15 }}
-        onClick={submitHandler}
-        isLoading={picLoading}
+    <Container maxW="xxl" centerContent>
+      <Box
+        marginTop="15px"
+        alignItems="center"
+        p={3}
+        bg="white"
+        w={{ base: "100%", md: "31%" }}
+        borderRadius="lg"
+        borderWidth="1px"
       >
-        Save Job
-      </Button>
-    </VStack>
-  
-  )
-}
+        <VStack spacing="5px">
+          <FormControl id="title" isRequired>
+            <FormLabel>Title</FormLabel>
+            <Input
+              placeholder="Enter Job Title"
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </FormControl>
+          <FormControl id="description" isRequired>
+            <FormLabel>Description</FormLabel>
+            <Input
+              placeholder="Enter Description"
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </FormControl>
+          <FormControl id="company" isRequired>
+            <FormLabel>Company</FormLabel>
+            <Input
+              placeholder="Enter Company Name"
+              onChange={(e) => setCompany(e.target.value)}
+            />
+          </FormControl>
+          <FormControl id="skills" isRequired>
+            <FormLabel>Skills</FormLabel>
 
-export default CreateJob
+            <Input
+              placeholder="Enter Skills"
+              onChange={(e) => setSkills(e.target.value)}
+            />
+          </FormControl>
+
+          <FormControl id="experience" isRequired>
+            <FormLabel>Experience</FormLabel>
+            <Input
+              placeholder="Enter No. of Years of Experience required"
+              onChange={(e) => setExperience(e.target.value)}
+            />
+          </FormControl>
+
+          <FormControl id="employment-type" isRequired>
+            <FormLabel>Employment Type</FormLabel>
+            <Select
+              value={employmentType}
+              onChange={(e) => setEmploymentType(e.target.value)}
+            >
+              <option value="internship">Internship</option>
+              <option value="fulltime">Full-time</option>
+            </Select>
+          </FormControl>
+
+          {/* add dropdown with options and reuse that in signup */}
+          {/* <FormControl id="employmentType" isRequired>
+            <FormLabel>Employment Type</FormLabel>
+            <Select placeholder="Select an option">
+              {options.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </Select>
+          </FormControl> */}
+          <FormControl id="location" isRequired>
+            <FormLabel>Location</FormLabel>
+            <Input
+              placeholder="Enter City"
+              onChange={(e) => setLocation(e.target.value)}
+            />
+          </FormControl>
+
+          <FormControl id="packageOffered" isRequired>
+            <FormLabel>Package</FormLabel>
+            <Input
+              placeholder="Enter Offered Package in Lakhs"
+              onChange={(e) => setPackageOffered(e.target.value)}
+            />
+          </FormControl>
+          <Button
+            colorScheme="blue"
+            width="100%"
+            style={{ marginTop: 15 }}
+            onClick={submitHandler}
+          >
+            Save Job
+          </Button>
+        </VStack>
+      </Box>
+    </Container>
+  );
+};
+
+export default CreateJob;

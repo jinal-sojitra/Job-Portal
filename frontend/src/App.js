@@ -18,12 +18,11 @@ import Signup from "./components/Authentication/Signup";
 import Chatpage from "./components/Chatpage";
 import CreateJob from "./components/CreateJob";
 import JobPost from "./components/JobPost";
+import Jobs from "./components/Jobs";
 
 function App() {
   return (
     <div className="App">
-      {/* <Navbar/>
-      <LoginPage /> */}
       <Flex direction="column" width="100%">
         <Box>
           <Navbar />
@@ -33,16 +32,10 @@ function App() {
             <Route path="/" exact element={<LoginPage />} />
             <Route path="/chat" exact element={<Chatpage />} />
             <Route path="/createJob" exact element={<CreateJob />} />
-            <Route path="/jobs" exact element={<JobPost />} />
+            <Route path="/jobs" exact element={<Jobs />} />
           </Routes>
         </Box>
       </Flex>
-      {/* {/* } */}
-      {/* </div> */}
-      {/* <BrowserRouter> */}
-      {/* <Chatpage /> */}
-
-      {/* </BrowserRouter> */}
     </div>
   );
 }

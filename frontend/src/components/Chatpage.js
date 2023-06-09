@@ -12,7 +12,7 @@ const Chatpage = () => {
 
   return (
     <div style={{ width: "100%" }}>
-      {user && <SideDrawer />}
+      {user && <SideDrawer />} 
       <Stack direction="row" h="81.5vh">
         {/* display:"flex" */}
         {user && <MyChats fetchAgain={fetchAgain} />}
