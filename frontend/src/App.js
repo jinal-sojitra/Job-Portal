@@ -13,12 +13,12 @@ import SplashScreen from "./components/SplashScreen";
 import SigninPage from "./components/Home";
 import Navbar from "./components/Navbar";
 import SideDrawer from "./components/miscelleneous/SideDrawer";
-import LoginPage from "./components/LoginPage";
-import Signup from "./components/Authentication/Signup";
+import LoginPage from "./components/LoginPage"
 import Chatpage from "./components/Chatpage";
 import CreateJob from "./components/CreateJob";
-import JobPost from "./components/JobPost";
+import HomePage from "./components/HomePage"
 import Jobs from "./components/Jobs";
+
 
 function App() {
   return (
@@ -29,10 +29,11 @@ function App() {
         </Box>
         <Box>
           <Routes>
-            <Route path="/" exact element={<LoginPage />} />
+            <Route path="/" exact element={<HomePage />} />
             <Route path="/chat" exact element={<Chatpage />} />
             <Route path="/createJob" exact element={<CreateJob />} />
             <Route path="/jobs" exact element={<Jobs />} />
+            <Route path="/login" exact element={<LoginPage />} />
           </Routes>
         </Box>
       </Flex>

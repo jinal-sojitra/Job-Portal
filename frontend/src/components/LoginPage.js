@@ -6,10 +6,11 @@ import Signup from './Authentication/Signup';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("userInfo"));
-    if (user) navigate("/chat");
-  });
+  // useEffect(() => {
+  //   const user = JSON.parse(localStorage.getItem("userInfo"));
+  //   if (user) navigate("/chat");
+  // });
+  
   return (
     
         <Container maxW="xl" centerContent >

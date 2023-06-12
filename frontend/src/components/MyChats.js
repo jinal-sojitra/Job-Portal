@@ -97,7 +97,7 @@ const MyChats = ({ fetchAgain }) => {
                 cursor="pointer"
                 bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
                 color={selectedChat === chat ? "white" : "black"}
-                px={3} 
+                px={3}
                 py={2}
                 borderRadius="lg"
                 key={chat._id}
@@ -109,7 +109,12 @@ const MyChats = ({ fetchAgain }) => {
                 </Text>
                 {chat.latestMessage && (
                   <Text fontSize="xs">
-                    <b>{chat.latestMessage.sender.name} : </b>
+                    <b>
+                      {chat.latestMessage.sender.name === user
+                        ? chat.latestMessage.sender.name
+                        :"You" }{" "}
+                      :{" "}
+                    </b>
                     {chat.latestMessage.content.length > 50
                       ? chat.latestMessage.content.substring(0, 51) + "..."
                       : chat.latestMessage.content}

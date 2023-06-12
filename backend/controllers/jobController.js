@@ -46,6 +46,30 @@ const createJob = asyncHandler(async (req, res) => {
   }
 });
 
+const applyToJob = asyncHandler(async (req, res) => {
+  
+  const { user,job } = req.body;
+  
+  Job.findById(job)
+    .then((job) => {
+      if (!job) {
+        return res.status(404).json({ error: "Job not found" });
+      }
+
+      job.applicants.push(user);
+
+      return job.save();
+    })
+    .then((updatedJob) => {
+      res.json(updatedJob);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).json({ error: "Internal server error" });
+    });
+
+})
+
 const getJobDetails = asyncHandler(async (req, res) => {
 try {
   const jobs = await Job.find();
@@ -95,4 +119,4 @@ const deleteJob = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { createJob, getJobDetails, getJobById, updateJob, deleteJob };
+module.exports = { createJob,applyToJob, getJobDetails, getJobById, updateJob, deleteJob };

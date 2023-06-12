@@ -16,7 +16,7 @@ const JobPost = (props) => {
          },
        };
        const { data } = await axios.post(
-         "/application",
+         "/job/apply",
          { user: user, job: job },
          config
        );

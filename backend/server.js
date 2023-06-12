@@ -22,7 +22,7 @@ app.use("/user", userRoutes);
 app.use("/chat", chatRoutes);
 app.use("/message", messageRoutes);
 app.use("/job", jobRoutes);
-app.use("/application", applicationRoutes);
+// app.use("/application", applicationRoutes);
 
 app.use(notFound)
 app.use(errorHandler)
