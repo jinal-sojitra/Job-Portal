@@ -1,17 +1,42 @@
-import { Box, Flex, Heading, Button } from "@chakra-ui/react";
+import React from "react";
+import { Button } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import "./styles/home.css";
+import { VStack } from "@chakra-ui/layout";
+import LoginPage from "./LoginPage";
+
 
 const HomePage = () => {
+  // const [login, setLogin] = useState(false); 
+const navigate = useNavigate();
+  const handleSignupClick = () => {
+     navigate('/login'); // Set the showSignup state to true on button click
+  };
   return (
-    <Flex align="center" justify="center" minHeight="100vh" bg="gray.100">
-      <Box p={8} borderWidth={1} borderRadius="lg" bg="white" shadow="lg">
-        <Heading mb={4} textAlign="center">
-          Welcome to Job Portal
-        </Heading>
-        <Button colorScheme="blue" size="lg" width="full">
-          Get Started
-        </Button>
-      </Box>
-    </Flex>
+    <div className="background">
+      <div className="overlay"></div>
+      <VStack>
+        <div className="text-container">
+          {/* <center> */}
+          <h1>
+            <bold>Welcome to Job Portal</bold>
+          </h1>
+          <br />
+          <h2>
+            <bold>Connecting Talent to Opportunities</bold>
+          </h2>
+          {/* </center> */}
+          <Button
+            colorScheme="blue"
+            style={{ marginTop: 15 }}
+            onClick={handleSignupClick}
+            // isLoading={picLoading}
+          >
+            Sign Up
+          </Button>
+        </div>
+      </VStack>
+    </div>
   );
 };
 

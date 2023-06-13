@@ -127,9 +127,9 @@ function SideDrawer() {
         // alignItems="center"
         bg="white"
         w="100%"
-        marginTop="10px"
-        marginBottom="10px"
-        p="10px 5px 5px 5px"
+        marginTop="5px"
+        marginBottom="5px"
+        p="5px 5px 5px 5px"
         borderWidth="2px"
       >
         <Stack direction="row">

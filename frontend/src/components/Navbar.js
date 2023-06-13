@@ -14,15 +14,10 @@ const Navbar = () => {
     <Flex justifyContent="space-between" bg="white" p={4} width="100%">
       {/* alignItems="center" */}
 
-      <Heading size="md">
+      <Heading size="md" color="primary">
         <i class="fa-solid fa-briefcase"></i> Job Portal
       </Heading>
       <Stack direction="row">
-        <Button>
-          <NavLink to="/login" p={2}>
-            Login
-          </NavLink>
-        </Button>
         {user && (
           <Button>
             <NavLink to="/chat" p={2}>

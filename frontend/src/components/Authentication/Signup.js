@@ -24,6 +24,12 @@ const Signup = () => {
   const [password, setPassword] = useState();
   const [pic, setPic] = useState();
   const [picLoading, setPicLoading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+    
+  };
 
 const handleRoleChange = (e) => {
   setRole(e.target.value); 
@@ -99,6 +105,11 @@ const handleRoleChange = (e) => {
       
   };
 
+  const postResume = (resume) => {
+     const formData = new FormData();
+     formData.append("pdfFile", selectedFile);
+  }
+
   const postDetails = (pics) => {
     setPicLoading(true);
     if (pics === undefined) {
@@ -117,7 +128,7 @@ const handleRoleChange = (e) => {
       data.append("file", pics);
       data.append("upload_preset", "job-portal");
       data.append("cloud_name", "dmdbdyviw");
-      fetch("https://api.cloudinary.com/v1_1/dmdbdyviw/image/upload", {
+      fetch("https://api.cloudinary.com/v1_1/dmdbdyviw", {
         method: "post",
         body: data,
       })
@@ -207,6 +218,16 @@ const handleRoleChange = (e) => {
           p={1.5}
           accept="image/*"
           onChange={(e) => postDetails(e.target.files[0])}
+        />
+      </FormControl>
+
+      <FormControl id="resume">
+        <FormLabel>Upload your Resume</FormLabel>
+        <Input
+          type="file"
+          p={1.5}
+          accept="application/pdf"
+          onChange={(e) => postResume(e.target.files[0])}
         />
       </FormControl>
 

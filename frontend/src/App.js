@@ -6,11 +6,11 @@ import { Flex, Box } from "@chakra-ui/react";
 // import LoginPage from './components/Login/LoginPage.js'
 // import SplashScreen from './components/SplashScreen.js'
 import Chat from "./components/Chatpage";
-import Home from "./components/Home";
+
 // import Registration from './components/Registration';
 import { BrowserRouter,Route, Routes } from "react-router-dom";
-import SplashScreen from "./components/SplashScreen";
-import SigninPage from "./components/Home";
+
+
 import Navbar from "./components/Navbar";
 import SideDrawer from "./components/miscelleneous/SideDrawer";
 import LoginPage from "./components/LoginPage"
