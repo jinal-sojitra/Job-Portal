@@ -1,6 +1,8 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const generateToken = require("../config/generateToken");
+const cloudinary=require('../utils/cloudinary')
+
 
 //@description     Get or Search all users
 //@route           GET /api/user?search=
@@ -21,7 +23,7 @@ const allUsers = asyncHandler(async (req, res) => {
 
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { name,role, email, password, pic } = req.body;
+  const { name,role, email, password, pic} = req.body;
 
   if (!name ||!role|| !email || !password) {
     res.status(400);
@@ -41,6 +43,7 @@ const registerUser = asyncHandler(async (req, res) => {
     email,
     password,
     pic,
+   
   });
 
   if (user) {

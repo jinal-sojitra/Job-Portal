@@ -8,12 +8,12 @@ const userSchema = mongoose.Schema(
     },
     role: {
       type: String,
-      required:true
+      required: true,
     },
     email: {
       type: String,
       required: true,
-      unique:true
+      unique: true,
     },
     password: {
       type: String,
@@ -22,7 +22,10 @@ const userSchema = mongoose.Schema(
     pic: {
       type: String,
       default:
-        "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+        "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+    },
+    resume: {
+      type: String,
     },
   },
   { timestamps: true }

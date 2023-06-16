@@ -95,7 +95,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     socket.on("message recieved", (newMessageRecieved) => {
      
       setFetchAgain(!fetchAgain);
-      // setSelectedChat(newMessageRecieved.chat)
+      setSelectedChat(newMessageRecieved.chat);
      
     });
   });

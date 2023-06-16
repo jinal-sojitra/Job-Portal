@@ -21,7 +21,7 @@ const navigate = useNavigate();
           <h1>
             <bold>Welcome to Job Portal</bold>
           </h1>
-          <br />
+          <br/> 
           <h2>
             <bold>Connecting Talent to Opportunities</bold>
           </h2>

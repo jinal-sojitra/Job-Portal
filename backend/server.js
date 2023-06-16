@@ -7,8 +7,9 @@ const chatRoutes = require("./routes/chatRoutes")
 const jobRoutes=require('./routes/jobRoutes') 
 // const chats = require('./data/data.js');
 const messageRoutes = require("./routes/messageRoutes")
-const applicationRoutes=require("./routes/applicationRoutes")
+// const applicationRoutes=require("./routes/applicationRoutes")
 const cors = require("cors");
+const cloudinary=require("cloudinary")
 
 const connectDB=require("./config/db.js")
 

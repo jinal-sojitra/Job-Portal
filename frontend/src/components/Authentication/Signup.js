@@ -8,6 +8,7 @@ import { Select } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+
 // const dotenv = require("dotenv");
 // dotenv.config();
 
@@ -24,21 +25,16 @@ const Signup = () => {
   const [password, setPassword] = useState();
   const [pic, setPic] = useState();
   const [picLoading, setPicLoading] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [resume, setResume] = useState();
 
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-    
+  const handleRoleChange = (e) => {
+    setRole(e.target.value);
   };
-
-const handleRoleChange = (e) => {
-  setRole(e.target.value); 
-};
   const submitHandler = async () => {
     setPicLoading(true);
-    console.log(name, role, email, password);
+    console.log(name, role, email, password, pic);
 
-    if (!name || !role|| !email || !password || !confirmpassword) {
+    if (!name || !role || !email || !password || !confirmpassword) {
       toast({
         title: "Please Fill all the Feilds",
         status: "warning",
@@ -59,14 +55,14 @@ const handleRoleChange = (e) => {
       });
       return;
     }
-    console.log(name,role, email, password, pic);
+    console.log(name, role, email, password, pic);
     try {
       const config = {
         headers: {
           "Content-type": "application/json",
         },
       };
-      
+
       const { data } = await axios.post(
         "/user",
         {
@@ -78,7 +74,7 @@ const handleRoleChange = (e) => {
         },
         config
       );
-      
+
       console.log(data);
       toast({
         title: "Registration Successful",
@@ -90,7 +86,6 @@ const handleRoleChange = (e) => {
       localStorage.setItem("userInfo", JSON.stringify(data));
       setPicLoading(false);
       navigate("/chat");
-
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -101,14 +96,29 @@ const handleRoleChange = (e) => {
         position: "bottom",
       });
       setPicLoading(false);
-      }
-      
+    }
   };
 
   const postResume = (resume) => {
-     const formData = new FormData();
-     formData.append("pdfFile", selectedFile);
-  }
+    const data = new FormData();
+    data.append("file", resume);
+    data.append("upload_preset", "job-portal");
+    data.append("cloud_name", "dmdbdyviw");
+    fetch(`https://api.cloudinary.com/v1_1/dmdbdyviw`, {
+      method: "post",
+      body: data,
+      headers: {
+        "Content-Type": "Access-Control-Allow-Origin",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setResume(data.url.toString());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const postDetails = (pics) => {
     setPicLoading(true);
@@ -128,10 +138,11 @@ const handleRoleChange = (e) => {
       data.append("file", pics);
       data.append("upload_preset", "job-portal");
       data.append("cloud_name", "dmdbdyviw");
-      fetch("https://api.cloudinary.com/v1_1/dmdbdyviw", {
-        method: "post",
-        body: data,
-      })
+      axios
+        .post(`https://api.cloudinary.com/v1_1/dmdbdyviw`, {
+          method: "post",
+          body: data,
+        })
         .then((res) => res.json())
         .then((data) => {
           setPic(data.url.toString());
@@ -221,7 +232,7 @@ const handleRoleChange = (e) => {
         />
       </FormControl>
 
-      <FormControl id="resume">
+      {/* <FormControl id="resume">
         <FormLabel>Upload your Resume</FormLabel>
         <Input
           type="file"
@@ -229,7 +240,7 @@ const handleRoleChange = (e) => {
           accept="application/pdf"
           onChange={(e) => postResume(e.target.files[0])}
         />
-      </FormControl>
+      </FormControl> */}
 
       <Button
         colorScheme="blue"
